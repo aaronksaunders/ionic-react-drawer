@@ -8,5 +8,5 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 
 <p align='center'>
-<img src='ezgif.com-resize.gif' width='50%' alt='sample image'>
+<img src='ezgif.com-resize.gif' width='33%' alt='sample image'>
 </p>
