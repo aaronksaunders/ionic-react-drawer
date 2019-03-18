@@ -10,3 +10,6 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 <p align='center'>
 <img src='ezgif.com-resize.gif' width='33%' alt='sample image'>
 </p>
+
+#### See other Ionic React Samples
+- https://github.com/aaronksaunders/my-react-ionic-app
