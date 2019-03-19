@@ -3,11 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@capacitor/cli": "^1.0.0-beta.19",
+    "@capacitor/core": "^1.0.0-beta.19",
+    "@capacitor/ios": "^1.0.0-beta.19",
     "@ionic/react": "^0.0.5",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
-    "react-router": "^4.4.0",
-    "react-router-dom": "^4.4.0",
+    "react-router": "5.0.0",
+    "react-router-dom": "5.0.0",
     "react-scripts": "2.1.8"
   },
   "scripts": {

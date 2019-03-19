@@ -1,0 +1,6 @@
+{
+  "appId": "com.aaron.IonicReactDrawerApp",
+  "appName": "IonicReactDrawerApp",
+  "bundledWebRuntime": false,
+  "webDir": "build"
+}
