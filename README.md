@@ -5,6 +5,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 - create react app
 - Ionic SideMenu
 - React Router
+- Added Capacitor Support: https://capacitor.ionicframework.com/
 
 
 <p align='center'>
