@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useState, useEffect  } from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { Redirect } from "react-router";
 import "./App.css";
@@ -9,30 +9,46 @@ import {
   IonRouterOutlet
 } from "@ionic/react";
 import PageOne from "./pages/PageOne";
+import LoginPage from "./pages/LoginPage";
 import PageOneDetail from "./pages/PageOneDetail";
 import PageTwo from "./pages/PageTwo";
 import Menu from "./components/Menu";
 
 
+const PrivateRoute = ({ authenticated, component: Component, ...rest }) => (
+  <Route {...rest} render={(props) => (
+    authenticated === true
+      ? <Component {...props} />
+      : <Redirect to={{
+          pathname: '/page-login',
+          state: { from: props.location }
+        }} />
+  )} />
+)
 
-class App extends Component {
-  render() {
+
+export default function App() {
+
+  const [authenticated, setAuthenticated] = useState(false)
+
     return (
       <Router>
         <div className="App">
           <IonApp>
             <IonSplitPane contentId="main">
-              <Menu />
+              <Menu disabled={!authenticated}/>
               <IonPage id="main">
-                <Route
+                <PrivateRoute
+                  authenticated={authenticated}
                   exact
                   path="/"
                   render={() => <Redirect to="/page-one" />}
                 />
+                <Route path="/page-login" component={LoginPage} />
                 <IonRouterOutlet>
-                  <Route path="/page-one" component={PageOne} />
-                  <Route path="/page-one-detail" component={PageOneDetail} />
-                  <Route path="/page-two" component={PageTwo} />
+                  <PrivateRoute path="/page-one" component={PageOne} authenticated={authenticated}/>
+                  <PrivateRoute path="/page-one-detail" component={PageOneDetail} authenticated={authenticated}/>
+                  <PrivateRoute path="/page-two" component={PageTwo}  authenticated={authenticated} />
                 </IonRouterOutlet>
               </IonPage>
             </IonSplitPane>
@@ -40,7 +56,5 @@ class App extends Component {
         </div>
       </Router>
     );
-  }
 }
 
-export default App;

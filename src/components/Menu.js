@@ -13,9 +13,9 @@ import {
 } from "@ionic/react";
 
 
-const Menu = ({ history }) => {
+const Menu = ({ history, disabled }) => {
   return (
-    <IonMenu contentId="main">
+    <IonMenu contentId="main" disabled={disabled}>
       <IonHeader>
         <IonToolbar>
           <IonTitle>Menu</IonTitle>
