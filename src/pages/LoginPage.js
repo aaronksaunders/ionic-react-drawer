@@ -21,22 +21,27 @@ const LoginPage = () => {
               <IonLabel>In Login Page</IonLabel>
             </IonItem>
             <AuthConsumer>
-              {({ isAuth, login }) => (
-                <IonButton
-                  expand="full"
-                  onClick={e => {
-                    debugger;
-                    if (!e.currentTarget) {
-                      return;
-                    }
-                    e.preventDefault();
-                    login("email@mail.com", "password");
-                    //history.push("/page-one");
-                  }}
-                >
-                  {isAuth ? "Logged In" : "Login"}
-                </IonButton>
-              )}
+              {({ isAuth, login }) => {
+                return (
+                  <IonButton
+                    expand="full"
+                    onClick={async e => {
+                      debugger;
+                      if (!e.currentTarget) {
+                        return;
+                      }
+                      e.preventDefault();
+                      let r = await login(
+                        "aaron@clearlyinnovative.com",
+                        "password123"
+                      );
+                      history.push("/page-one");
+                    }}
+                  >
+                    {isAuth ? "Logged In" : "Login"}
+                  </IonButton>
+                );
+              }}
             </AuthConsumer>
             <IonButton
               expand="full"

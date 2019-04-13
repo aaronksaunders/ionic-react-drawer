@@ -3,7 +3,12 @@ import 'firebase/auth'
 import 'firebase/firebase-firestore'
 
 const config = {
-
+    apiKey: "AIzaSyDs7PUvcA8tjZqYZyKNIzx2Z8okBYsBM_o",
+    authDomain: "in3grow-app.firebaseapp.com",
+    databaseURL: "https://in3grow-app.firebaseio.com",
+    projectId: "in3grow-app",
+    storageBucket: "in3grow-app.appspot.com",
+    messagingSenderId: "212863563912"
 }
 
 class Firebase {

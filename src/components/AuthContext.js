@@ -5,11 +5,30 @@ const AuthContext = React.createContext();
 
 const AuthProvider = ({ children }) => {
   const [isAuth, setAuthenticated] = useState(false);
-  const login = async (email, password) => {
+  /**
+   *
+   */
+  const logout = () => {
     try {
-      let user = await firebaseService.login(email, password);
-      //props.history.replace("/dashboard");
-      setAuthenticated(true)
+      return firebaseService.logout().then(() => {
+        setTimeout(() => {
+            //setAuthenticated(false);
+          }, 100);
+      });
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+  /**
+   *
+   * @param {*} email
+   * @param {*} password
+   */
+  const login = (email, password) => {
+    try {
+      return firebaseService.login(email, password).then(() => {
+          setAuthenticated(true);
+      });
     } catch (error) {
       alert(error.message);
     }
@@ -19,7 +38,8 @@ const AuthProvider = ({ children }) => {
       value={{
         isAuth,
         setAuthenticated,
-        login
+        login,
+        logout
       }}
     >
       {children}
@@ -27,6 +47,5 @@ const AuthProvider = ({ children }) => {
   );
 };
 const AuthConsumer = AuthContext.Consumer;
-
 
 export { AuthProvider, AuthConsumer };

@@ -1,5 +1,6 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
+import { AuthConsumer } from "../components/AuthContext";
 import {
   IonMenu,
   IonHeader,
@@ -9,9 +10,8 @@ import {
   IonList,
   IonItem,
   IonMenuToggle,
-  IonLabel,
+  IonLabel
 } from "@ionic/react";
-
 
 const Menu = ({ history, disabled }) => {
   return (
@@ -32,6 +32,26 @@ const Menu = ({ history, disabled }) => {
             <IonItem button onClick={() => history.push("/page-two")}>
               <IonLabel>PAGE TWO</IonLabel>
             </IonItem>
+          </IonMenuToggle>
+          <IonMenuToggle key={"logout"} auto-hide="false">
+            <AuthConsumer>
+              {({ isAuth, logout }) => (
+                <IonItem
+                  button
+                  onClick={async e => {
+                    if (!e.currentTarget) {
+                      return;
+                    }
+                    e.preventDefault();
+                    debugger;
+                    let r = await logout();
+                    //history.push("/");
+                  }}
+                >
+                  <IonLabel>LOGOUT</IonLabel>
+                </IonItem>
+              )}
+            </AuthConsumer>
           </IonMenuToggle>
         </IonList>
       </IonContent>
