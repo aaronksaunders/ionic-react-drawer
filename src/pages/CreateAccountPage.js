@@ -9,16 +9,16 @@ import { AuthConsumer } from "../components/AuthContext";
  *
  * sets the `renderContent` propety to render the contents of the page
  */
-const LoginPage = () => {
+const CreateAccountPage = () => {
   return (
     <BasicPage
-      title="Login Page"
+      title="CreateAccountPage"
       hasMenu
       renderContent={history => {
         return (
           <>
             <IonItem lines="none">
-              <IonLabel>In Login Page</IonLabel>
+              <IonLabel>In Create Account Page</IonLabel>
             </IonItem>
             <AuthConsumer>
               {({ isAuth, login }) => (
@@ -34,18 +34,21 @@ const LoginPage = () => {
                     //history.push("/page-one");
                   }}
                 >
-                  {isAuth ? "Logged In" : "Login"}
+                  Create Account
                 </IonButton>
               )}
             </AuthConsumer>
             <IonButton
               expand="full"
               onClick={e => {
+                if (!e.currentTarget) {
+                  return;
+                }
                 e.preventDefault();
-                history.push("/page-create-account");
+                history.push("/page-login");
               }}
             >
-              Create Account
+              Cancel
             </IonButton>
           </>
         );
@@ -54,4 +57,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default CreateAccountPage;
