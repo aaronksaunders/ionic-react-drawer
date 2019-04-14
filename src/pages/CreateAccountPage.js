@@ -25,7 +25,6 @@ const CreateAccountPage = () => {
                 <IonButton
                   expand="full"
                   onClick={e => {
-                    debugger;
                     if (!e.currentTarget) {
                       return;
                     }

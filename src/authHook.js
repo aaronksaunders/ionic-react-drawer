@@ -3,14 +3,12 @@ import firebaseService from "./firebase";
 
 export const useAuth = () => {
     const [state, setAuthState] = React.useState(() => {
-      debugger;
       const user = firebaseService.auth.currentUser;
       return { initializing: true, user };
     });
   
     function onChange(user) {
-      debugger;
-      console.log(state.initializing)
+      console.log(state.initializing, user)
       setAuthState({ initializing: false, user });
     }
   

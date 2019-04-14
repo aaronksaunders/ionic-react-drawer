@@ -26,7 +26,6 @@ const LoginPage = () => {
                   <IonButton
                     expand="full"
                     onClick={async e => {
-                      debugger;
                       if (!e.currentTarget) {
                         return;
                       }

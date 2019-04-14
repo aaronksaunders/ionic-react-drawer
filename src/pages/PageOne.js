@@ -43,7 +43,6 @@ const PageOne = () => {
                         return;
                       }
                       e.preventDefault();
-                      debugger;
                       let r = await logout();
                       history.push("/page-login");
                     }}

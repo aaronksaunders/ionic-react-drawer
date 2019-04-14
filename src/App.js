@@ -1,4 +1,4 @@
-import React, { Component, useState, useEffect } from "react";
+import React, { Component, useState, useContext } from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { Redirect } from "react-router";
 import "./App.css";
@@ -10,12 +10,12 @@ import PageOneDetail from "./pages/PageOneDetail";
 import PageTwo from "./pages/PageTwo";
 import Menu from "./components/Menu";
 
-import { useAuth } from "./authHook";
 
-import { AuthProvider, AuthConsumer } from "./components/AuthContext";
+
+import { AuthProvider, AuthConsumer, AuthContext } from "./components/AuthContext";
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
-  debugger
+  console.log(useContext(AuthContext))
   return (
     <AuthConsumer>
       {({ isAuth }) => (
@@ -39,9 +39,8 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
   );
 };
 
-export default function App() {
-  const { initializing, user } = useAuth();
 
+export default function App() {
   const renderRoot = isAuth => {
     console.log(isAuth);
     return (
@@ -71,58 +70,53 @@ export default function App() {
   };
 
   return (
-    <>
-      {initializing ? (
-        <div>Loading</div>
-      ) : (
-        <Router>
-          <AuthProvider>
-            <AuthConsumer>
-              {({ setAuthenticated }) => {
-                console.log(user);
-                // setAuthenticated(user !== null);
-                return (
-                  <IonApp>
-                    <IonSplitPane contentId="main">
-                      <Menu disabled={false} />
-                      <IonPage id="main">
-                        <PrivateRoute
-                          user={user}
-                          exact
-                          path="/"
-                          render={() => <Redirect to="/page-one" />}
-                        />
-                        <IonRouterOutlet>
-                          <Route path="/page-login" component={LoginPage} />
-                          <Route
-                            path="/page-create-account"
-                            component={CreateAccountPage}
-                          />
-                          <PrivateRoute
-                            user={user}
-                            path="/page-one"
-                            component={PageOne}
-                          />
-                          <PrivateRoute
-                            user={user}
-                            path="/page-one-detail"
-                            component={PageOneDetail}
-                          />
-                          <PrivateRoute
-                            user={user}
-                            path="/page-two"
-                            component={PageTwo}
-                          />
-                        </IonRouterOutlet>
-                      </IonPage>
-                    </IonSplitPane>
-                  </IonApp>
-                );
+    <AuthProvider>
+      <AuthConsumer>
+        {({ initializing, user }) =>
+          initializing ? (
+            <div>Loading</div>
+          ) : (
+            <Router>
+              <IonApp>
+                <IonSplitPane contentId="main">
+                  <Menu disabled={false} />
+                  <IonPage id="main">
+                    <PrivateRoute
+                      user={user}
+                      exact
+                      path="/"
+                      render={() => <Redirect to="/page-one" />}
+                    />
+                    <IonRouterOutlet>
+                      <Route path="/page-login" component={LoginPage} />
+                      <Route
+                        path="/page-create-account"
+                        component={CreateAccountPage}
+                      />
+                      <PrivateRoute
+                        user={user}
+                        path="/page-one"
+                        component={PageOne}
+                      />
+                      <PrivateRoute
+                        user={user}
+                        path="/page-one-detail"
+                        component={PageOneDetail}
+                      />
+                      <PrivateRoute
+                        user={user}
+                        path="/page-two"
+                        component={PageTwo}
+                      />
+                    </IonRouterOutlet>
+                  </IonPage>
+                </IonSplitPane>
+              </IonApp>
               }}
-            </AuthConsumer>
-          </AuthProvider>
-        </Router>
-      )}
-    </>
+            </Router>
+          )
+        }
+      </AuthConsumer>
+    </AuthProvider>
   );
 }

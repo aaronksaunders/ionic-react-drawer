@@ -43,7 +43,6 @@ const Menu = ({ history, disabled }) => {
                       return;
                     }
                     e.preventDefault();
-                    debugger;
                     let r = await logout();
                     //history.push("/");
                   }}
