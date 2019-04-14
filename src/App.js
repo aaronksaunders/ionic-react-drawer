@@ -10,17 +10,18 @@ import PageOneDetail from "./pages/PageOneDetail";
 import PageTwo from "./pages/PageTwo";
 import Menu from "./components/Menu";
 
-import firebaseService from "./firebase";
+import { useAuth } from "./authHook";
 
 import { AuthProvider, AuthConsumer } from "./components/AuthContext";
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
+  debugger
   return (
     <AuthConsumer>
       {({ isAuth }) => (
         <Route
           render={props =>
-            isAuth ? (
+            rest.user ? (
               <Component {...props} />
             ) : (
               <Redirect
@@ -39,30 +40,10 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
 };
 
 export default function App() {
-  const [firebaseInitialized, setFirebaseInitialized] = useState(false);
-  const [authState, setAuthState] = useState({
-    auth: false,
-    loaded: true
-  });
+  const { initializing, user } = useAuth();
 
-  // useEffect(() => {
-  //   // if (authState.loaded) return
-  //   let x = firebaseService.isInitialized().then(v => {
-  //     debugger;
-
-  //     if (!authState.loaded)
-  //       if (v) {
-  //         setAuthState({ auth: true, loaded: true });
-  //       } else {
-  //         setAuthState({ auth: false, loaded: true });
-  //       }
-  //     console.log(authState);
-  //   });
-  // }, [authState.auth]);
-
-  const renderRoot = (setAuthenticated, isAuth) => {
-    console.log( isAuth )
-    //setAuthenticated(isAuth);
+  const renderRoot = isAuth => {
+    console.log(isAuth);
     return (
       <IonApp>
         <IonSplitPane contentId="main">
@@ -91,13 +72,53 @@ export default function App() {
 
   return (
     <>
-      {!authState.loaded ? null : (
+      {initializing ? (
+        <div>Loading</div>
+      ) : (
         <Router>
           <AuthProvider>
             <AuthConsumer>
-              {({ setAuthenticated, isAuth }) =>
-                renderRoot(setAuthenticated, isAuth)
-              }
+              {({ setAuthenticated }) => {
+                console.log(user);
+                // setAuthenticated(user !== null);
+                return (
+                  <IonApp>
+                    <IonSplitPane contentId="main">
+                      <Menu disabled={false} />
+                      <IonPage id="main">
+                        <PrivateRoute
+                          user={user}
+                          exact
+                          path="/"
+                          render={() => <Redirect to="/page-one" />}
+                        />
+                        <IonRouterOutlet>
+                          <Route path="/page-login" component={LoginPage} />
+                          <Route
+                            path="/page-create-account"
+                            component={CreateAccountPage}
+                          />
+                          <PrivateRoute
+                            user={user}
+                            path="/page-one"
+                            component={PageOne}
+                          />
+                          <PrivateRoute
+                            user={user}
+                            path="/page-one-detail"
+                            component={PageOneDetail}
+                          />
+                          <PrivateRoute
+                            user={user}
+                            path="/page-two"
+                            component={PageTwo}
+                          />
+                        </IonRouterOutlet>
+                      </IonPage>
+                    </IonSplitPane>
+                  </IonApp>
+                );
+              }}
             </AuthConsumer>
           </AuthProvider>
         </Router>

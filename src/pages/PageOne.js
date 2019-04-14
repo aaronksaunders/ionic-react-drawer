@@ -38,13 +38,14 @@ const PageOne = () => {
                 return (
                   <IonButton
                     expand="full"
-                    onClick={e => {
+                    onClick={async e => {
                       if (!e.currentTarget) {
                         return;
                       }
                       e.preventDefault();
-                      let r = logout();
-                      history.push("/");
+                      debugger;
+                      let r = await logout();
+                      history.push("/page-login");
                     }}
                   >
                     LOGOUT

@@ -8,6 +8,7 @@ const config = {
 
 class Firebase {
 	constructor() {
+        debugger
 		app.initializeApp(config)
 		this.auth = app.auth()
 		this.db = app.firestore()
@@ -28,10 +29,8 @@ class Firebase {
 		})
 	}
 
-	isInitialized() {
-		return new Promise(resolve => {
-			this.auth.onAuthStateChanged(resolve)
-		})
+	isInitialized(_change) {
+			return this.auth.onAuthStateChanged(_change)
 	}
 
 	getCurrentUsername() {

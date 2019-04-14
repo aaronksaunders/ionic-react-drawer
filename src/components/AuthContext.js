@@ -11,9 +11,7 @@ const AuthProvider = ({ children }) => {
   const logout = () => {
     try {
       return firebaseService.logout().then(() => {
-        setTimeout(() => {
-            //setAuthenticated(false);
-          }, 100);
+        // setAuthenticated(false);
       });
     } catch (error) {
       alert(error.message);
@@ -27,7 +25,7 @@ const AuthProvider = ({ children }) => {
   const login = (email, password) => {
     try {
       return firebaseService.login(email, password).then(() => {
-          setAuthenticated(true);
+        setAuthenticated(true);
       });
     } catch (error) {
       alert(error.message);
